@@ -423,11 +423,16 @@ export function buildRules(cfg: ResolvedConfig): RuleDef[] {
   if (countersOn && counterAlts !== "") {
     rules.push({
       name: "native-counter",
-      source: `(${INT})(${MD})${SP}(${counterAlts})`,
+      source: `(${INT})(?:\\.(\\d+))?(${MD})${SP}(${counterAlts})`,
       read: (m, text, start) => {
         const n = intValue(m[1]);
         if (n === null) return null;
-        const counter = m[3];
+        const counter = m[4];
+        // 1.5배, 2.5시간: a decimal is always read Sino-Korean, whatever the counter.
+        if (m[2] !== undefined) {
+          if (cfg.disabled.has("sino-counter")) return null;
+          return { reading: `${decimalReading(n, m[2])}${m[3]} ${counter}`, rule: "sino-counter" };
+        }
         // 제1장, 제 2권: after "제" the number is an ordinal, always Sino-Korean.
         // 20대, 30대 남성: a round number before "대" is an age group, not a count of vehicles.
         const ordinal = ORDINAL_PREFIX.test(text.slice(Math.max(0, start - 3), start));
@@ -435,7 +440,7 @@ export function buildRules(cfg: ResolvedConfig): RuleDef[] {
         const isNative = cfg.nativeCounters.has(counter) && !ordinal && !decade;
         const rule: RuleName = isNative ? "native-counter" : "sino-counter";
         if (cfg.disabled.has(rule)) return null;
-        return { reading: `${isNative ? nativeAttr(n) : sinoBig(n)}${m[2]} ${counter}`, rule };
+        return { reading: `${isNative ? nativeAttr(n) : sinoBig(n)}${m[3]} ${counter}`, rule };
       },
     });
   }
