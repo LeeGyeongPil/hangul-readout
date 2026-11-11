@@ -3,8 +3,7 @@
 [한국어](README.md) | **English**
 
 A zero-dependency TypeScript library and CLI that rewrites Korean text the way a person reads it aloud, right before it goes to a TTS engine: `사과 3개` becomes `사과 세 개`, `3.5km` becomes `삼 점 오 킬로미터`, `010-1234-5678` becomes `공일공, 일이삼사, 오육칠팔`.
-It reports which spans changed (offsets in the original text and in the output), can emit SSML `<sub alias>`, and ships a sentence chunker so streaming LLM tokens such as `3` / `.` / `5km` are never misread.
-Install: `npm install github:LeeGyeongPil/hangul-readout` (Node >= 22.12, ESM only). Minimal use: `import { normalize } from "hangul-readout"; normalize("사과 3개").text`.
+It reports which spans changed (offsets in the original text and in the output), can emit SSML `<sub alias>`, and ships a sentence chunker so streaming LLM tokens such as `3` / `.` / `5km` are never misread. Install: `npm install github:LeeGyeongPil/hangul-readout` (Node >= 22.12, ESM only).
 
 ## 1. Introduction
 
