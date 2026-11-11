@@ -27,6 +27,13 @@ describe("span offsets", () => {
     ]);
   });
 
+  it("covers the counter after a decimal", () => {
+    expect(normalize("1.5배와 2.5시간").spans).toEqual([
+      { start: 0, end: 4, outStart: 0, outEnd: 7, source: "1.5배", reading: "일 점 오 배", rule: "sino-counter" },
+      { start: 6, end: 11, outStart: 9, outEnd: 17, source: "2.5시간", reading: "이 점 오 시간", rule: "sino-counter" },
+    ]);
+  });
+
   it("returns no spans when nothing changes", () => {
     expect(normalize("안녕하세요")).toEqual({ text: "안녕하세요", spans: [] });
   });

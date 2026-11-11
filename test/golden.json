@@ -135,5 +135,10 @@
   { "input": "$5", "expected": "오 달러" },
   { "input": "₩5000", "expected": "오천 원" },
   { "input": "$3.50", "expected": "삼 점 오영 달러" },
-  { "input": "+3", "expected": "플러스 삼" }
+  { "input": "+3", "expected": "플러스 삼" },
+  { "input": "1.5배", "expected": "일 점 오 배" },
+  { "input": "2.5배 빨라요", "expected": "이 점 오 배 빨라요" },
+  { "input": "2.5시간", "expected": "이 점 오 시간", "note": "a decimal is Sino-Korean even before a native counter" },
+  { "input": "3.5개", "expected": "삼 점 오 개" },
+  { "input": "1.5개월", "expected": "일 점 오 개월" }
 ]

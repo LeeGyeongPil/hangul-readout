@@ -25,6 +25,10 @@ describe("option validation", () => {
 });
 
 describe("options in use", () => {
+  it("falls back to the plain number rule for a decimal counter when sino-counter is disabled", () => {
+    expect(normalize("1.5배", { disable: ["sino-counter"] }).text).toBe("일 점 오배");
+  });
+
   it("does not change the options object it was given", () => {
     const options = Object.freeze({
       over99: "sino" as const,
