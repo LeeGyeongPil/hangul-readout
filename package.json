@@ -1,6 +1,6 @@
 {
   "name": "hangul-readout",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Korean text normalization for TTS: numbers, counters, units and dates become what a person reads aloud, plus a sentence chunker for streaming LLM output.",
   "keywords": [
     "korean",
