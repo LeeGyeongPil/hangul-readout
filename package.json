@@ -1,0 +1,59 @@
+{
+  "name": "hangul-readout",
+  "version": "0.1.0",
+  "description": "Korean text normalization for TTS: numbers, counters, units and dates become what a person reads aloud, plus a sentence chunker for streaming LLM output.",
+  "keywords": [
+    "korean",
+    "tts",
+    "text-normalization",
+    "speech-synthesis",
+    "ssml",
+    "llm-streaming",
+    "hangul"
+  ],
+  "license": "MIT",
+  "author": "LeeGyeongPil",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeeGyeongPil/hangul-readout.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LeeGyeongPil/hangul-readout/issues"
+  },
+  "homepage": "https://github.com/LeeGyeongPil/hangul-readout#readme",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "hangul-readout": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "pretest": "npm run build",
+    "test": "vitest run",
+    "prepare": "npm run build",
+    "start": "npm run build && node dist/cli.js --table examples/sample.txt"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "es-hangul": "2.4.0",
+    "typescript": "7.0.2",
+    "vitest": "5.1.0"
+  }
+}
