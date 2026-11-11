@@ -4,6 +4,12 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.3] - 2026-11-11
+
+### Fixed
+- README: removed the known-limitation note claiming `--table` ignores Hangul double width; the table already counts Hangul and other wide characters as two columns.
+- README: the limitation note for a currency name after a space now says the name is read twice (`₩5,000 원` -> `오천 원 원`), matching the actual output.
+
 ## [0.1.2] - 2026-11-11
 
 ### Fixed
