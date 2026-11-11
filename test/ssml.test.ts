@@ -37,4 +37,8 @@ describe("toSSML", () => {
     expect(n.toSSML("3개")).toBe('<speak><sub alias="세 개">3개</sub></speak>');
     expect(n.toSSML("3개", { speak: false })).toBe('<sub alias="세 개">3개</sub>');
   });
+
+  it("wraps a currency symbol and its own unit in one sub", () => {
+    expect(toSSML("₩5,000원")).toBe('<speak><sub alias="오천 원">₩5,000원</sub></speak>');
+  });
 });

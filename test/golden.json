@@ -140,5 +140,11 @@
   { "input": "2.5배 빨라요", "expected": "이 점 오 배 빨라요" },
   { "input": "2.5시간", "expected": "이 점 오 시간", "note": "a decimal is Sino-Korean even before a native counter" },
   { "input": "3.5개", "expected": "삼 점 오 개" },
-  { "input": "1.5개월", "expected": "일 점 오 개월" }
+  { "input": "1.5개월", "expected": "일 점 오 개월" },
+  { "input": "₩5,000원", "expected": "오천 원", "note": "a unit right after the symbol is read once" },
+  { "input": "₩1000원", "expected": "천 원" },
+  { "input": "₩3.5원", "expected": "삼 점 오 원" },
+  { "input": "₩5,000원이다", "expected": "오천 원이다" },
+  { "input": "$5달러", "expected": "오 달러" },
+  { "input": "₩5,000 원", "expected": "오천 원 원", "note": "a unit after a space is not absorbed" }
 ]

@@ -258,4 +258,9 @@ describe("long text without spaces (linear time)", () => {
     expect(await collect(sentences([...text]))).toEqual(expected);
     expect(await collect(sentences([text.slice(0, 1234), text.slice(1234)]))).toEqual(expected);
   });
+
+  it("reads a currency unit that arrives in the next token once", async () => {
+    const items = await collect(normalizeStream(["₩5,000", "원이다. 끝."]));
+    expect(items.map((i) => i.text)).toEqual(["오천 원이다.", "끝."]);
+  });
 });

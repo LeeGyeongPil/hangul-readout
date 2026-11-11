@@ -370,7 +370,9 @@ export function buildRules(cfg: ResolvedConfig): RuleDef[] {
   // $5, ₩5000, €3.50: the symbol moves behind the number, as people say it.
   add({
     name: "currency",
-    source: `([$₩€¥£])(${INT})(?:\\.(\\d+))?`,
+    // The symbol's own name right after the number is part of the match ("₩5,000원"), so it is read once.
+    // The lookbehinds keep other names out: "$5원" still leaves the "원" alone. A space ends the match.
+    source: `([$₩€¥£])(${INT})(?:\\.(\\d+))?(?:(?<=₩[\\d,.]+)원|(?<=\\$[\\d,.]+)달러|(?<=€[\\d,.]+)유로|(?<=¥[\\d,.]+)엔|(?<=£[\\d,.]+)파운드)?`,
     read: (m) => {
       const whole = intValue(m[2]);
       return whole === null ? null : { reading: `${decimalReading(whole, m[3])} ${CURRENCY_NAMES[m[1]]}` };

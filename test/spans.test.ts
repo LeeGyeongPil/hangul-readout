@@ -19,6 +19,14 @@ describe("span offsets", () => {
     expect(result.spans[0].start).toBe(6);
   });
 
+  it("covers a currency name right after the symbol", () => {
+    expect(normalize("₩5,000원").spans).toEqual([
+      { start: 0, end: 7, outStart: 0, outEnd: 4, source: "₩5,000원", reading: "오천 원", rule: "currency" },
+    ]);
+    expect(normalize("₩5,000원 ₩3,000원").spans.map((s) => [s.start, s.end])).toEqual([[0, 7], [8, 15]]);
+    expect(normalize("$5원").text).toBe("오 달러원");
+  });
+
   it("matches a literal expectation", () => {
     const input = "사과 3개와 배 20개";
     expect(normalize(input).spans).toEqual([
