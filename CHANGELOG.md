@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [0.1.4] - 2026-11-18
+
+### Fixed
+- A counter right after a negative number is read with the number as one span, in Sino-Korean (`-5개` -> `마이너스 오 개`, `-3년` -> `마이너스 삼 년`, `-2.5배` -> `마이너스 이 점 오 배`) instead of `마이너스 오개`.
+
 ## [0.1.3] - 2026-11-11
 
 ### Fixed
