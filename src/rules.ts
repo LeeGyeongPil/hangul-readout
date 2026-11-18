@@ -425,15 +425,22 @@ export function buildRules(cfg: ResolvedConfig): RuleDef[] {
   if (countersOn && counterAlts !== "") {
     rules.push({
       name: "native-counter",
-      source: `(${INT})(?:\\.(\\d+))?(${MD})${SP}(${counterAlts})`,
+      source: `(-?)(${INT})(?:\\.(\\d+))?(${MD})${SP}(${counterAlts})`,
       read: (m, text, start) => {
-        const n = intValue(m[1]);
+        const n = intValue(m[2]);
         if (n === null) return null;
-        const counter = m[4];
+        const negative = m[1] === "-";
+        const sign = negative ? "마이너스 " : "";
+        const counter = m[5];
         // 1.5배, 2.5시간: a decimal is always read Sino-Korean, whatever the counter.
-        if (m[2] !== undefined) {
+        if (m[3] !== undefined) {
           if (cfg.disabled.has("sino-counter")) return null;
-          return { reading: `${decimalReading(n, m[2])}${m[3]} ${counter}`, rule: "sino-counter" };
+          return { reading: `${sign}${decimalReading(n, m[3])}${m[4]} ${counter}`, rule: "sino-counter" };
+        }
+        // -5개: a negative number is not a count, so it is always Sino-Korean.
+        if (negative) {
+          if (cfg.disabled.has("sino-counter")) return null;
+          return { reading: `${sign}${sinoBig(n)}${m[4]} ${counter}`, rule: "sino-counter" };
         }
         // 제1장, 제 2권: after "제" the number is an ordinal, always Sino-Korean.
         // 20대, 30대 남성: a round number before "대" is an age group, not a count of vehicles.
@@ -442,7 +449,7 @@ export function buildRules(cfg: ResolvedConfig): RuleDef[] {
         const isNative = cfg.nativeCounters.has(counter) && !ordinal && !decade;
         const rule: RuleName = isNative ? "native-counter" : "sino-counter";
         if (cfg.disabled.has(rule)) return null;
-        return { reading: `${isNative ? nativeAttr(n) : sinoBig(n)}${m[3]} ${counter}`, rule };
+        return { reading: `${isNative ? nativeAttr(n) : sinoBig(n)}${m[4]} ${counter}`, rule };
       },
     });
   }

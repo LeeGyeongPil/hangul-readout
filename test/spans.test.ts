@@ -46,3 +46,32 @@ describe("span offsets", () => {
     expect(normalize("안녕하세요")).toEqual({ text: "안녕하세요", spans: [] });
   });
 });
+
+describe("counter after a negative number", () => {
+  const cases: Array<[string, string]> = [
+    ["-5개", "마이너스 오 개"],
+    ["-3명", "마이너스 삼 명"],
+    ["-3년", "마이너스 삼 년"],
+    ["-2.5배", "마이너스 이 점 오 배"],
+    ["-10개월", "마이너스 십 개월"],
+  ];
+  for (const [input, reading] of cases) {
+    it(`reads ${input} as one sino-counter span`, () => {
+      const result = normalize(input);
+      expect(result.text).toBe(reading);
+      expect(result.spans).toEqual([
+        { start: 0, end: input.length, outStart: 0, outEnd: reading.length, source: input, reading, rule: "sino-counter" },
+      ]);
+    });
+  }
+
+  it("keeps neighbouring rules unchanged", () => {
+    expect(normalize("기온 -3℃").text).toBe("기온 영하 삼 도");
+    expect(normalize("재고 5개").text).toBe("재고 다섯 개");
+    expect(normalize("2-3명").text).toBe("두세 명");
+  });
+
+  it("falls back to the number rule when sino-counter is off", () => {
+    expect(normalize("-5개", { disable: ["sino-counter"] }).spans[0].rule).toBe("number");
+  });
+});
