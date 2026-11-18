@@ -250,7 +250,7 @@ The scanner sweeps the text from left to right, and when it meets a number it tr
 | 12 | `ordinal` | 1번째 → 첫 번째, 2번째 → 두 번째 |
 | 13 | `beon` | 3번 출구 → 삼 번 출구 / 3번 눌러 → 세 번 눌러 |
 | 14 | `native-counter` | 3개 → 세 개 |
-| 15 | `sino-counter` | 3년 → 삼 년, 20세 → 이십 세, 제1장 → 제일 장, 30대 → 삼십 대. Decimals are read in Sino-Korean even before native counters: 1.5배 → 일 점 오 배, 2.5시간 → 이 점 오 시간 |
+| 15 | `sino-counter` | 3년 → 삼 년, 20세 → 이십 세, 제1장 → 제일 장, 30대 → 삼십 대. Decimals are read in Sino-Korean even before native counters: 1.5배 → 일 점 오 배, 2.5시간 → 이 점 오 시간. Also after a negative sign, as one span: -5개 → 마이너스 오 개 |
 | 16 | `digits` | Digit strings of 17 or more digits, or starting with 0 → one digit at a time |
 | 17 | `number` | 12,345 → 만 이천삼백사십오 |
 | - | `abbreviation` | AI → 에이아이, 5G → 파이브지 |
@@ -434,7 +434,7 @@ Some readings have no single correct answer. Defaults are chosen, and they can b
 - **Date notation and versions**: versions and IPs such as `1.2.3` and `192.168.0.1`, and URLs, are left whole as they are. A date with spaces in it, like `2026. 11. 11.`, may be cut at `2026.` in a stream.
 - Some ambiguous readings (`3대 1` → `세 대 일`) are a limit of rule-based processing.
 - It does no pronunciation conversion (liaison, tensification), no Hanja readings and no morphological analysis.
-- The examples, tests (279) and typecheck passed on Node 22.12.0 and 26.13.0, and the CI matrix (22, 24, 26) keeps checking them.
+- The examples, tests (286) and typecheck passed on Node 22.12.0 and 26.13.0, and the CI matrix (22, 24, 26) keeps checking them.
 - **Known limits (awaiting a code fix)**: some combinations of the `~` and `-` range symbols are not read as ranges or are read awkwardly. Ordinal reading may be over-applied to a number written with a space after "제", as in `제 3개`. The reading of some counters such as `4강`, and of a standalone `+82` country code, may sound unnatural.
 
 ## 10. Comparison with existing alternatives
@@ -452,7 +452,7 @@ No feature table is made. Other tools' features change, so below only the date c
 npm ci && npm run typecheck && npm test
 ```
 
-`npm test` builds in `pretest` and then runs `vitest run`. All tests run offline and deterministically, and need no keys. The result confirmed in this repository is `Test Files 10 passed`, `Tests 279 passed`.
+`npm test` builds in `pretest` and then runs `vitest run`. All tests run offline and deterministically, and need no keys. The result confirmed in this repository is `Test Files 10 passed`, `Tests 286 passed`.
 
 **Adding a golden row**: `test/golden.json` is an array of `{ "input", "expected", "options"?, "note"? }` (currently 147 rows). When you find a sentence that is read wrongly, add one line and check with `npx vitest run test/golden.test.ts`. Each row's test name is its input text.
 
